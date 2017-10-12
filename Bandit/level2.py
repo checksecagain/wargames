@@ -8,7 +8,6 @@ if len(sys.argv) != 2:
 	log.failure("Usage: %s <%s password>" % __file__, user)
 	sys.exit()
 
-host = 'bandit.labs.overthewire.org'
 password = sys.argv[1]
 port = 2220
 
