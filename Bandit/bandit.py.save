@@ -1,0 +1,53 @@
+import sys
+from pwn import *
+
+def level0_to_level1(shell):
+	log.info("List dir: %s\n" % shell.ls(['-la']))
+	log.success("Flag: %s" % shell.cat(['readme']))
+
+def level1_to_level2(shell):
+	log.info("List dir: %s\n" % shell.ls(['-la']))
+	log.success("Password: %s" % shell.cat(['./-']))
+
+def level2_to_level3(shell):
+	log.info("List dir: %s\n" % shell.ls(['-la']))
+	log.success("Password: %s" % shell.cat(['spaces in this filename']))
+
+def level3_to_level4(shell):
+	log.info('inhere directory listing: %s\n' % shell.ls(['inhere', '-la']))
+	log.success('Password: %s' % shell.cat(['inhere/.hidden']))
+
+def level4_to_level5(shell):
+	log.info(shell.ls(['inhere', '-la']))
+	log.info(shell.find(['./inhere', '-type', 'f', '-exec', 'file', '{}', '+']))
+	log.success('Password: %s' % shell.cat(['./inhere/-file07']))
+
+def main():
+	if len(sys.argv) != 3:
+       		log.failure("Usage: %s <user> <password>" % (__file__))
+        	sys.exit(1)
+
+	host = 'bandit.labs.overthewire.org'
+	username = sys.argv[1]
+	password = sys.argv[2]
+	port = 2220
+
+	shell = ssh(host = host, user = username, password = password, port = port)
+	log.success("Logged in as %s" % shell.whoami())
+
+	if username == 'bandit0':
+		level0_to_level1(shell)
+	elif username == 'bandit1':
+		level1_to_level2(shell)
+	elif username == 'bandit2':
+		level2_to_level3(shell)
+	elif username == 'bandit3':
+		level3_to_level4(shell)
+	elif username == 'bandit4':
+		level4_to_level5(shell)
+
+	shell.close()
+
+if __name__ == '__main__':
+	main()
+

@@ -5,7 +5,7 @@ user = 'bandit2'
 host = 'bandit.labs.overthewire.org'
 
 if len(sys.argv) != 2:
-	log.failure("Usage: %s <%s password>" % __file__, user)
+	log.failure("Usage: %s <%s password>" % (__file__, user))
 	sys.exit()
 
 password = sys.argv[1]
