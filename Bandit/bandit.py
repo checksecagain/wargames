@@ -52,7 +52,9 @@ def level10_to_level11(shell):
 	log.success('Flag: %s' % flag)
 
 def level11_to_level12(shell):
-	shell.interactive()
+	flag = shell["cat data.txt | tr 'a-mn-zA-MN-Z' 'n-za-mN-ZA-M'"]
+	log.success('Flag: %s' % flag)
+	#shell.interactive()
 
 def main():
 	if len(sys.argv) != 3:
